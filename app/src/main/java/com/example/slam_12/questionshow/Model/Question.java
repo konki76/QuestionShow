@@ -8,7 +8,7 @@ public class Question {
 
     public Question(String question, String answer) {
         this.setQuestion(question);
-        this.setChoiceList(choiceList);
+        this.setAnswer(answer);
     }
 
     public String getQuestion() {
@@ -19,11 +19,11 @@ public class Question {
         mQuestion = question;
     }
 
-    public List<String> getChoiceList() {
+    public String getAnswer() {
         return mAnswer;
     }
 
-    public void setChoiceList(String answer) {
+    public void setAnswer(String answer) {
         mAnswer = answer;
     }
 
