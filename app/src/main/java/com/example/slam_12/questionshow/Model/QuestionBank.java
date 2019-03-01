@@ -1,4 +1,4 @@
-package com.example.slam_12.questionshow.Model.sampledata;
+package com.example.slam_12.questionshow.Model;
 
 import java.util.Collections;
 import java.util.List;

@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.slam_12.questionshow.Model.sampledata.*;
+import com.example.slam_12.questionshow.Model.*;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,15 +37,21 @@ public class MainActivity extends AppCompatActivity {
         droit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String matiere = "droit";
+                mMatiere.setNomMatiere(matiere);
                 Intent QuestionActivityIntent = new Intent(MainActivity.this, QuestionActivity.class);
-                startActivity(QuestionActivityIntent);
+                QuestionActivityIntent.putExtra(MAT_NAME, mMatiere.getNomMatiere());
+                startActivityForResult(QuestionActivityIntent, 0);
             }
         });
         management_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String matiere = "management";
+                mMatiere.setNomMatiere(matiere);
                 Intent QuestionActivityIntent = new Intent(MainActivity.this, QuestionActivity.class);
-                startActivity(QuestionActivityIntent);
+                QuestionActivityIntent.putExtra(MAT_NAME, mMatiere.getNomMatiere());
+                startActivityForResult(QuestionActivityIntent, 0);
             }
         });
     }

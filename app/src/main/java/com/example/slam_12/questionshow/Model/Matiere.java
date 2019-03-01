@@ -1,4 +1,4 @@
-package com.example.slam_12.questionshow.Model.sampledata;
+package com.example.slam_12.questionshow.Model;
 
 public class Matiere {
     private String mNomMatiere;
