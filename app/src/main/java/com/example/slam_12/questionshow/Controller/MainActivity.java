@@ -1,4 +1,4 @@
-package com.example.slam_12.questionshow;
+package com.example.slam_12.questionshow.Controller;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.slam_12.questionshow.Model.*;
+import com.example.slam_12.questionshow.R;
 
 public class MainActivity extends AppCompatActivity {
 
