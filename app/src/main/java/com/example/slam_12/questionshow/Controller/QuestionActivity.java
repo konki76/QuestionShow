@@ -2,10 +2,12 @@ package com.example.slam_12.questionshow.Controller;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,14 +16,31 @@ import android.widget.Toast;
 import com.example.slam_12.questionshow.Model.Question;
 import com.example.slam_12.questionshow.Model.QuestionBank;
 import com.example.slam_12.questionshow.R;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class QuestionActivity extends AppCompatActivity implements View.OnClickListener {
     private QuestionBank mQuestionBank;
     private Question mCurrentQuestion;
-    private Button mQuestion;
+    private TextView mQuestion;
     private Button mAnswer;
     private int mNumberOfQuestions;
     private boolean mRectoVerso = true;
@@ -41,13 +60,13 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         } else {
             mNumberOfQuestions = 9;
         }
-        mQuestion = (Button) findViewById(R.id.question_btn);
+        mQuestion = (TextView) findViewById(R.id.question_txt);
         mAnswer = (Button) findViewById(R.id.answer_btn);
         Button b_retour =(Button)findViewById(R.id.retour_btn);
 
         final Intent intent = getIntent();
         String matiere = intent.getStringExtra(MainActivity.MAT_NAME);
-        final TextView tv1 = (TextView)findViewById( R.id.question_txt );
+        final TextView tv1 = (TextView)findViewById( R.id.qu_txt );
         tv1.setText( matiere );
 
         b_retour.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +82,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         mQuestion.setOnClickListener(this);
         mAnswer.setOnClickListener(this);
         mCurrentQuestion = mQuestionBank.getQuestion();
-        this.displayQuestion(mCurrentQuestion);
+        mQuestion.setText(mCurrentQuestion.getQuestion());
     }
     @Override
     public void onClick(View v) {
@@ -81,7 +100,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                         endGame();
                     } else {
                         mCurrentQuestion = mQuestionBank.getQuestion();
-                        displayQuestion(mCurrentQuestion);
+                        mQuestion.setText(mCurrentQuestion.getQuestion());
                         mRectoVerso = true;
                         mAnswer.setText("");
                     }
@@ -109,10 +128,39 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                 .create()
                 .show();
     }
-
-    private void displayQuestion(final Question question) {
-        mQuestion.setText(mCurrentQuestion.getQuestion());
+    private List<Question> parse(final String json) {
+        try {
+            final List<Question> products = new ArrayList<>();
+            final JSONArray jProductArray = new JSONArray(json);
+            for (int i = 0; i < jProductArray.length(); i++) {
+                products.add(new Question(jProductArray.optJSONObject(i)));
+            }
+            return products;
+        } catch (JSONException e) {
+            Log.v("Tag", "[JSONException] e : " + e.getMessage());
+        }
+        return null;
     }
+    private final OkHttpClient client = new OkHttpClient();
+
+    public String getJson(String url) throws IOException {
+        // Prepare the request.
+        Request request = new Request.Builder().url(url).build();
+        // Execute the request.
+        Response response = client.newCall(request).execute();
+        // Get the result.
+        return response.body().string();
+    }
+    String json;
+    {
+        try {
+            json = getJson("http://localhost/edm_json.php");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    List<Question> list = new Gson().fromJson(json, new TypeToken<List<Question>>() {}.getType());
+
     private QuestionBank generateQuestions() {
         Question E1 = new Question("* Définir l’entreprise. ", "Ensemble structuré d'éléments matériels, humains et financiers organisés en vue de produire des biens et des services destinés à être vendus. ");
         Question E2 = new Question("** Distinguer les petites, les moyennes et les grandes entreprises. ", "- Petite entreprise = entre 10 et 49 salariés, - Moyenne entreprise = entre 50 et 249 salariés - Grande entreprise = entre 250 et 1999 salariés. ");

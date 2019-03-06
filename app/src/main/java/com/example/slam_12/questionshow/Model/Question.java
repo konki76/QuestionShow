@@ -1,8 +1,11 @@
 package com.example.slam_12.questionshow.Model;
 
 
+import org.json.JSONObject;
+
 public class Question {
 
+    private  String mCodeQu;
     private String mQuestion;
     private String mAnswer;
 
@@ -10,7 +13,15 @@ public class Question {
         this.setQuestion(question);
         this.setAnswer(answer);
     }
+    public Question(JSONObject jObject){
+        this.mCodeQu = jObject.optString("codeQu");
+        this.mQuestion = jObject.optString("question");
+        this.mAnswer = jObject.optString("reponse");
+    }
 
+    public void setCodeQu(String CodeQu) {
+        this.mCodeQu = CodeQu;
+    }
     public String getQuestion() {
         return mQuestion;
     }
