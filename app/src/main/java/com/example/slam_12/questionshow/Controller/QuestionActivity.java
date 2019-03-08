@@ -53,7 +53,16 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
 
-        mQuestionBank = this.generateQuestions();
+        String jsonQuestion = "";
+        {
+            try {
+                jsonQuestion = getJson("http://localhost/edm_json.php");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        List<Question> listQuestion = new Gson().fromJson(jsonQuestion, new TypeToken<List<Question>>() {}.getType());
+        mQuestionBank = this.generateQuestions(listQuestion);
 
         if (savedInstanceState != null) {
             mNumberOfQuestions = savedInstanceState.getInt(BUNDLE_STATE_QUESTION);
@@ -128,19 +137,21 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                 .create()
                 .show();
     }
+    /*
     private List<Question> parse(final String json) {
         try {
-            final List<Question> products = new ArrayList<>();
+            final List<Question> listQuestion = new ArrayList<>();
             final JSONArray jProductArray = new JSONArray(json);
             for (int i = 0; i < jProductArray.length(); i++) {
-                products.add(new Question(jProductArray.optJSONObject(i)));
+                listQuestion.add(new Question(jProductArray.optJSONObject(i)));
             }
-            return products;
+            return listQuestion;
         } catch (JSONException e) {
             Log.v("Tag", "[JSONException] e : " + e.getMessage());
         }
         return null;
     }
+    */
     private final OkHttpClient client = new OkHttpClient();
 
     public String getJson(String url) throws IOException {
@@ -151,17 +162,13 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         // Get the result.
         return response.body().string();
     }
-    String json;
-    {
-        try {
-            json = getJson("http://localhost/edm_json.php");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    List<Question> list = new Gson().fromJson(json, new TypeToken<List<Question>>() {}.getType());
 
-    private QuestionBank generateQuestions() {
+
+    private QuestionBank generateQuestions(List<Question> listQuestion) {
+
+
+        return new QuestionBank(listQuestion);
+        /*
         Question E1 = new Question("* Définir l’entreprise. ", "Ensemble structuré d'éléments matériels, humains et financiers organisés en vue de produire des biens et des services destinés à être vendus. ");
         Question E2 = new Question("** Distinguer les petites, les moyennes et les grandes entreprises. ", "- Petite entreprise = entre 10 et 49 salariés, - Moyenne entreprise = entre 50 et 249 salariés - Grande entreprise = entre 250 et 1999 salariés. ");
         Question E3 = new Question("** Expliquer la répartition des coûts de production des constructeurs informatiques. ", "Répartition traditionnelle des coûts de production : les coûts variables augmentent à mesure de l’augmentation des quantités produites tandis que les coûts fixes évoluent par palier. ");
@@ -302,6 +309,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                 E76, E77, E78, E79, E80, E81, E82, E83, E84, E85, E86, E87, E88, E89, E90, E91, E92, E93, E94, E95, E96, E97, E98, E99, E100,
                 E101, E102, E103, E104, E105, E106, E107, E108, E109, E110, E111, E112, E113, E114, E115, E116, E117, E118, E119, E120, E121, E122, E123, E124, E125,
                 E126, E127, E128, E129, E130, E131, E132));
+        */
     }
 
 }
