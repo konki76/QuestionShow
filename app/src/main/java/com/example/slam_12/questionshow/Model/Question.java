@@ -1,49 +1,38 @@
 package com.example.slam_12.questionshow.Model;
 
+public class QuestionJson {
 
-import org.json.JSONObject;
+    /**
+     * codeQu : D1
+     * question : * Ensemble de règles qui régissent les rapports des membres d’une même société. Qui suis-je ?
+     * answer : Le Droit.
+     */
 
-public class Question {
+    private String codeQu;
+    private String question;
+    private String answer;
 
-    private  String mCodeQu;
-    private String mQuestion;
-    private String mAnswer;
-
-    public Question(String question, String answer) {
-        this.setQuestion(question);
-        this.setAnswer(answer);
-    }
-    public Question(JSONObject jObject){
-        this.mCodeQu = jObject.optString("codeQu");
-        this.mQuestion = jObject.optString("question");
-        this.mAnswer = jObject.optString("reponse");
+    public String getCodeQu() {
+        return codeQu;
     }
 
-    public void setCodeQu(String CodeQu) {
-        this.mCodeQu = CodeQu;
+    public void setCodeQu(String codeQu) {
+        this.codeQu = codeQu;
     }
+
     public String getQuestion() {
-        return mQuestion;
+        return question;
     }
 
     public void setQuestion(String question) {
-        mQuestion = question;
+        this.question = question;
     }
 
     public String getAnswer() {
-        return mAnswer;
+        return answer;
     }
 
     public void setAnswer(String answer) {
-        mAnswer = answer;
-    }
-
-
-    @Override
-    public String toString() {
-        return "Question{" +
-                "mQuestion='" + mQuestion + '\'' +
-                ", mAnswer=" + mAnswer +
-                '}';
+        this.answer = answer;
     }
 }
