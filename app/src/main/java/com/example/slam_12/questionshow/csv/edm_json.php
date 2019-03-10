@@ -4,7 +4,7 @@ class Manager
     private function dbConnect()
     {
         try{
-            $db = new PDO('mysql:host=localhost;dbname=edm;charset=utf8', 'root', '');
+            $db = new PDO('mysql:host=localhost;dbname=planchot;charset=utf8', 'root', '');
             return $db;
         }
         catch(Exception $e)
