@@ -23,6 +23,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -53,25 +54,32 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         mAnswer = (Button) findViewById(R.id.answer_btn);
         Button b_retour =(Button)findViewById(R.id.retour_btn);
 
-        /*
-        OkHttp ok = new OkHttp();
-        String jsonQuestion = null;
-        try {
-            jsonQuestion = ok.getJson("http://mat.planchot.free.fr/edm_json.php");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println(jsonQuestion);
-        List<Question> listQuestion = new Gson().fromJson(jsonQuestion, new TypeToken<List<Question>>() {}.getType());
-        */
+        final Intent intent = getIntent();
+        String matiere = intent.getStringExtra(MainActivity.MAT_NAME);
+        final TextView tv1 = (TextView)findViewById( R.id.qu_txt );
+        tv1.setText( matiere );
+
         Gson gson = new GsonBuilder().create();
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.10.14.201/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.63.1/")
                 .addConverterFactory(GsonConverterFactory.create(gson)).build();
 
         JsonPlaceHolder jsonPlaceHolder = retrofit.create(JsonPlaceHolder.class);
-
-        Call<List<Question>> call = jsonPlaceHolder.getQuestions();
+        Call<List<Question>> call;
+        switch (matiere){
+            case "économie":
+                call = jsonPlaceHolder.getQuestionsE();
+                break;
+            case "droit":
+                call = jsonPlaceHolder.getQuestionsD();
+                break;
+            case "management":
+                call = jsonPlaceHolder.getQuestionsM();
+                break;
+            default:
+                call = jsonPlaceHolder.getQuestions();
+                break;
+        }
 
         call.enqueue(new Callback<List<Question>>() {
             @Override
@@ -81,6 +89,8 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                     return;
                 }
                 listQuestion.addAll(response.body());
+                Collections.shuffle(listQuestion);
+                Log.d("TEST", listQuestion.toString());
             }
 
             @Override
@@ -88,7 +98,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                 mAnswer.setText(t.getMessage());
             }
         });
-        listQuestion.add(new Question("codeQu", "question", "answer"));
+        listQuestion.add(new Question("codeQu", "Appuyer sur le champs du bas pour afficher les réponses et passer aux questions suivantes", "Essayer de réfléchir avant d'afficher la réponse. 10 questions vont vous être proposées."));
         mQuestionBank = new QuestionBank(listQuestion);
 
         if (savedInstanceState != null) {
@@ -96,11 +106,6 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         } else {
             mNumberOfQuestions = 9;
         }
-
-        final Intent intent = getIntent();
-        String matiere = intent.getStringExtra(MainActivity.MAT_NAME);
-        final TextView tv1 = (TextView)findViewById( R.id.qu_txt );
-        tv1.setText( matiere );
 
         b_retour.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,7 +133,6 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                 // Else, display the next question.
                 if (!mRectoVerso) {
                     if (--mNumberOfQuestions == 0) {
-                        // End the game
                         endGame();
                     } else {
                         mCurrentQuestion = mQuestionBank.getQuestion();
@@ -141,7 +145,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                     mAnswer.setText(mCurrentQuestion.getAnswer());
                 }
             }
-        }, 0); // LENGTH_SHORT is usually 2 second long
+        }, 0);
     }
     private void endGame() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -150,7 +154,6 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // End the activity
                         Intent intent = new Intent();
                         setResult(RESULT_OK, intent);
                         finish();

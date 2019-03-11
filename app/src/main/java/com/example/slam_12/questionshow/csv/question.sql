@@ -32,7 +32,7 @@ DROP TABLE IF EXISTS `question`;
 CREATE TABLE IF NOT EXISTS `question` (
   `codeQu` varchar(4) NOT NULL,
   `question` varchar(535) NOT NULL,
-  `reponse` varchar(535) NOT NULL,
+  `answer` varchar(535) NOT NULL,
   PRIMARY KEY (`codeQu`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `question` (
 -- Déchargement des données de la table `question`
 --
 
-INSERT INTO `question` (`codeQu`, `question`, `reponse`) VALUES
+INSERT INTO `question` (`codeQu`, `question`, `answer`) VALUES
 ('D1', '* Ensemble de règles qui régissent les rapports des membres d’une même société. Qui suis-je ? ', 'Le Droit.'),
 ('D10', '** Une loi promulguée est directement applicable sur le territoire français. Vrai ou Faux ?', 'Faux, le texte doit encore être publié au Journal Officiel. Il est ensuite applicable un jour franc après publication.'),
 ('D100', '*** Citer deux particularités de la période d’essai.', ' 1/ C’est la période qui s’ouvre après la conclusion du contrat de travail. Le contrat commence donc à l’exécuter. 2/ Les parties peuvent rompre librement le contrat, même si l’employeur doit avoir un motif légitime de la rompre.'),
@@ -222,7 +222,7 @@ INSERT INTO `question` (`codeQu`, `question`, `reponse`) VALUES
 ('D26', '* Le droit fiscal est une branche de droit privé. Vrai ou faux ?', 'Faux, c’est une branche de droit public.'),
 ('D260', '* Lister les missions des intermédiaires techniques depuis la loi de 2004. ', 'Ils doivent conserver les données d’identification et de connexion des utilisateurs pour des raisons pénales, participer à la lutte contre la contrefaçon et les comportements illégaux sur internet.'),
 ('D261', '** Citer trois missions du concepteur de logiciel.', '1/ Élaborer le cahier des charges avec le client, 2/ Développer le logiciel, 3/ Tester le logiciel (phase de recette provisoire), 4/ Rédiger la documentation, 5/ Assurer le suivi et la maintenance.');
-INSERT INTO `question` (`codeQu`, `question`, `reponse`) VALUES
+INSERT INTO `question` (`codeQu`, `question`, `answer`) VALUES
 ('D262', '** Indiquer la conséquence de la recette définitive lors de la conception d’un logiciel.', 'C’est la dernière étape de la réalisation du logiciel, si le client valide la recette définitive, le logiciel devient alors la propriété du client. La recette définitive entraîne donc le transfert de propriété du logiciel.'),
 ('D263', '* Définir le contrat consensuel.', 'C’est un contrat formé par le simple échange des consentements. Oral ou écrit, la forme n’est pas une condition de validité du contrat.'),
 ('D264', '* Définir le contrat sans intuitu personae.', 'C’est un contrat conclu avec n’importe quelle personne qui souhaite s’engager dans le contrat.'),
@@ -435,7 +435,7 @@ INSERT INTO `question` (`codeQu`, `question`, `reponse`) VALUES
 ('D450', '* Nommer le logiciel créé par une communauté de développeurs indépendants, tous coauteurs du logiciel.', 'Une œuvre de collaboration.'),
 ('D451', '* Le salarié qui a participé à la conception d’un logiciel peut apposer son nom dans le code source du logiciel. Vrai ou Faux ?', 'Vrai, puisqu’il conserve le droit à la paternité de l’œuvre.'),
 ('D452', '* La mention Copyright est nécessaire pour qu’un logiciel bénéfice de la protection par le droit d’auteur en France. Vrai ou Faux ?', 'Faux, aucune mention ou procédure n’est nécessaire pour obtenir la protection en droit français. Le copyright appartient à la législation anglo-saxonne.');
-INSERT INTO `question` (`codeQu`, `question`, `reponse`) VALUES
+INSERT INTO `question` (`codeQu`, `question`, `answer`) VALUES
 ('D453', '** Expliquer qui supporte la charge de la preuve en cas d’action en contrefaçon de logiciel.', 'La charge de la preuve est renversée. C’est au contrefacteur de rapporter la preuve qu’il n’a pas commis les actes répréhensibles dont on l’accuse.'),
 ('D454', '** Lister différentes sanctions que l’auteur d’un logiciel peut obtenir en justice en cas d’action en concurrence déloyale. ', 'Il peut obtenir des dommages et intérêts, le retrait des produits incriminés (réparation en nature) et selon les cas la publication de la sanction pour informer le public.'),
 ('D455', '* Préciser si les actions en contrefaçon et en concurrence déloyale sont cumulables en cas de conflit en matière de logiciel.', 'OUI, si l’auteur le souhaite.'),
@@ -660,7 +660,7 @@ INSERT INTO `question` (`codeQu`, `question`, `reponse`) VALUES
 ('M105', '*** Michel vient de créer une start-up de conception de site web. Il a embauché quatre salariés. Choisir une structure organisationnelle adaptée à sa situation.', 'Faits : entreprise jeune, de petite taille. CCL : structure fonctionnelle, (structure) par projet admise.'),
 ('M106', '*** B-Plus pense que pour être rentable, il faut qu’elle vende un maximum de logiciel de badgage à ses clients au prix le plus bas. Identifier la stratégie choisie par l’entreprise.', 'La stratégie de domination par les coûts.'),
 ('M107', '** Citer les cinq étapes de la démarche stratégique.', '1/ Réalisation du diagnostic internet et externe de l’entreprise 2/ Recherche des solutions 3/ Choix 4/ Mise en œuvre 5/ Contrôle et actions correctives. ');
-INSERT INTO `question` (`codeQu`, `question`, `reponse`) VALUES
+INSERT INTO `question` (`codeQu`, `question`, `answer`) VALUES
 ('M11', '*** Citer deux avantages et deux inconvénients de la stratégie d’intégration verticale.', '+ : maîtrise des technologies, des approvisionnements et/ou des débouchés, économies d’échelles, effets de synergie - : stratégie coûteuse car nécessite un développement par croissance externe, problème d’intégration de l’entreprise rachetée.'),
 ('M12', '*** Expliquer la stratégie de domination par les coûts.', 'La stratégie de domination par les coûts consiste à dominer les concurrents grâce à un prix de vente très compétitif permettant d’augmenter la marge ou de diminuer le prix de vente.'),
 ('M13', '*** Expliquer ce qu’est une stratégie de focalisation.', 'Stratégie qui consiste pour l’entreprise à se recentrer sur une activité, un produit. L’entreprise concentre ses efforts pour profiter d’une niche commerciale.'),
