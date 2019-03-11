@@ -12,6 +12,12 @@ public class Question {
     private String question;
     private String answer;
 
+    public Question(String codeQu, String question, String answer) {
+        this.codeQu = codeQu;
+        this.question = question;
+        this.answer = answer;
+    }
+
     public String getCodeQu() {
         return codeQu;
     }

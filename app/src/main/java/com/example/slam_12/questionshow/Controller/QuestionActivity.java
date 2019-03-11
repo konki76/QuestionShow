@@ -2,10 +2,12 @@ package com.example.slam_12.questionshow.Controller;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,9 +18,11 @@ import com.example.slam_12.questionshow.Model.OkHttp;
 import com.example.slam_12.questionshow.Model.Question;
 import com.example.slam_12.questionshow.R;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -43,6 +47,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
+        listQuestion = new ArrayList<Question>();
 
         mQuestion = (TextView) findViewById(R.id.question_txt);
         mAnswer = (Button) findViewById(R.id.answer_btn);
@@ -59,9 +64,10 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         System.out.println(jsonQuestion);
         List<Question> listQuestion = new Gson().fromJson(jsonQuestion, new TypeToken<List<Question>>() {}.getType());
         */
+        Gson gson = new GsonBuilder().create();
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://mat.planchot.free.fr/")
-                .addConverterFactory(GsonConverterFactory.create()).build();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.10.14.201/")
+                .addConverterFactory(GsonConverterFactory.create(gson)).build();
 
         JsonPlaceHolder jsonPlaceHolder = retrofit.create(JsonPlaceHolder.class);
 
@@ -74,7 +80,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                     mAnswer.setText("Code : " + response.code());
                     return;
                 }
-                listQuestion = response.body();
+                listQuestion.addAll(response.body());
             }
 
             @Override
@@ -82,7 +88,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                 mAnswer.setText(t.getMessage());
             }
         });
-
+        listQuestion.add(new Question("codeQu", "question", "answer"));
         mQuestionBank = new QuestionBank(listQuestion);
 
         if (savedInstanceState != null) {
@@ -106,7 +112,6 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
             }
         });
 
-        mQuestion.setOnClickListener(this);
         mAnswer.setOnClickListener(this);
         mCurrentQuestion = mQuestionBank.getQuestion();
         mQuestion.setText(mCurrentQuestion.getQuestion());
