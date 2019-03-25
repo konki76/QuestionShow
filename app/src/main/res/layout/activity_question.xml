@@ -13,19 +13,21 @@
         android:layout_height="50dp"
         android:orientation="horizontal"
         tools:context=".Controller.QuestionActivity">
-    <TextView
-        android:id="@+id/qu_txt"
-        android:text="Matière"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_weight="1"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:gravity="center" />
+        <TextView
+            android:id="@+id/qu_txt"
+            android:text="Matière"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            />
+
         <Button
             android:id="@+id/retour_btn"
             android:text="Retour"
@@ -49,7 +51,7 @@
         android:gravity="center"
         android:text="Question"
         android:textColor="@color/colorPrimary"
-        android:textSize="12sp" />
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/answer_btn"
@@ -63,7 +65,16 @@
         android:padding="15dp"
         android:text="Réponse"
         android:textColor="@android:color/black"
-        android:textSize="10sp" />
-
+        android:textSize="16sp" />
+    <Button
+        android:id="@+id/marqueur_btn"
+        android:text="Marquer"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_margin="2dp"
+        android:textColor="@android:color/black"
+        android:background="@android:color/white"
+        android:textSize="14sp"
+        />
 
 </LinearLayout>
